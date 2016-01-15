@@ -1,0 +1,66 @@
+﻿@model MVC留言板.ViewModels.UserInfoView 
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>用户注册</title>
+    <link href="~/Content/Web.css" rel="stylesheet" />
+    <script type="text/javascript">
+        function ChangeVerifyCode() {
+            document.getElementById("VerifyCode").setAttribute("src", "@Url.Action("VerifyCode", "Users")" + "?p=" + Math.random())
+        }
+    </script>
+</head>
+<body>
+    <script src="~/Scripts/jquery-1.7.1.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    
+    @using (Html.BeginForm()) {
+        @Html.ValidationSummary(true)
+    
+        <fieldset>
+            <legend>用户注册</legend>
+    
+            <div class="editor-label">
+                用户名:
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.userinfo.UserName)
+                @Html.ValidationMessageFor(model => model.userinfo.UserName, "", new { @class = "msgerror" })
+                @Html.ValidationMessage("msgUserName",new {@class="msgerror"})
+            </div>
+    
+            <div class="editor-label">
+                密码:
+            </div>
+            <div class="editor-field">
+                @Html.PasswordFor(model => model.userinfo.UserPwd)
+                @Html.ValidationMessageFor(model => model.userinfo.UserPwd,"", new { @class = "msgerror" })
+            </div>
+            <div class="editor-label">
+               验证码:
+            </div>
+             <div class="editor-field">
+              @Html.TextBoxFor(model => model.verifyCode,"", new {style = "width:50px" }) <img id="VerifyCode" src="@Url.Action("VerifyCode","Users")" />&nbsp;<a href="javascript:void(0)" onclick="ChangeVerifyCode()">看不清?</a> <br />
+                  @Html.ValidationMessageFor(model => model.verifyCode,"", new { @class = "msgerror" })
+                 @Html.ValidationMessage("verifyCodeError",new {@class="msgerror"})
+                 </div> 
+            <p>
+                <input type="submit" value="提交注册" />
+                @Html.ValidationMessage("msg", new { @class = "msgerror" })
+            </p>
+        </fieldset>
+    }
+    
+    <div>
+        @Html.ActionLink("返回留言板", "Index","Comment")
+    </div>
+</body>
+</html>

@@ -1,0 +1,53 @@
+﻿@model MVC留言板.Models.UserInfo
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>用户登陆</title>
+
+</head>
+<body>
+    <script src="~/Scripts/jquery-1.7.1.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <link href="~/Content/Web.css" rel="stylesheet" />
+    @using (Html.BeginForm()) {
+        @Html.ValidationSummary(true)
+    
+        <fieldset>
+            <legend>登陆</legend>
+    
+            <div class="editor-label">
+                账户:
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.UserName)
+                @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "msgerror" })
+            </div>
+    
+            <div class="editor-label">
+               密码:
+            </div>
+            <div class="editor-field">
+                @Html.PasswordFor(model => model.UserPwd)
+                @Html.ValidationMessageFor(model => model.UserPwd, "", new { @class = "msgerror" })
+            </div>
+    
+    
+            <p>
+                <input type="submit" value="登陆" />
+            </p>
+        </fieldset>
+    }
+    
+    <div>
+        @Html.ActionLink("返回留言板", "Index","Comment")
+    </div>
+</body>
+</html>
