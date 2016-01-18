@@ -55,11 +55,15 @@ namespace MVC留言板.Controllers
                     ModelState.AddModelError("msg", "注册失败");
                     return View();
                 }
-                return Content("注册成功");
+                return RedirectToAction("SignInSuccess");
             }
             return View();
         }
-        //登陆
+        public ActionResult SignInSuccess()
+        {
+            return View();
+        }
+        //登录
         public ActionResult Login()
         {
             return View();
@@ -84,7 +88,7 @@ namespace MVC留言板.Controllers
             }
             return View();
         }
-        //退出登陆
+        //退出登录
         public ActionResult ExitLogin()
         {
             Session.Remove("UserName");

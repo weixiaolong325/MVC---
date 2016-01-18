@@ -1,0 +1,40 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>注册成功</title>
+    <style type="text/css">
+        #content {
+        text-align:center;
+        }
+        #s {
+        color:#00ff21;
+        }
+    </style>
+   
+</head>
+<body onload="Redirect()">
+    <div id="content">
+        注册成功!<br /><span id="s"></span>S后自动跳转到<a href="@Url.Action("Login","Users")">登录</a>
+    </div>
+</body>
+</html>
+ <script type="text/javascript" >
+        var s = 5;
+        function Redirect()
+        {
+            document.getElementById("s").innerHTML = s;
+            s--;
+            if (s >=0) {
+                setTimeout('Redirect()', 1000);
+            }
+            else
+                window.location.href="@Url.Action("Login","Users")"
+        }
+     
+    </script>

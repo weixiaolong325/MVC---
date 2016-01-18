@@ -15,12 +15,12 @@ namespace MVC留言板.Controllers
         public ActionResult Index()
         {
             CommentView commentview = new CommentView();
-            //判断用户是否已经登陆
+            //判断用户是否已经登录
             if (Session["UserName"] != null)
             {
                 commentview.LoginState = Session["UserName"].ToString();
             }
-            else commentview.LoginState = "未登陆";
+            else commentview.LoginState = "未登录";
             return View(commentview);
         }
 

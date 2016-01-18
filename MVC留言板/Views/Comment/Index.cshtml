@@ -13,6 +13,7 @@
         padding:0px;
         margin:0px;
         font-size:14px;
+        background-color:#fefbee;
         }
         #head {
         height:30px;
@@ -74,7 +75,7 @@
 </head>
 <body>
     <div id="head">
-     用户:<span id="sp1">@Model.LoginState</span>  |@if(Model.LoginState=="未登陆"){<a href="@Url.Action("Login","Users")">登陆</a>}
+     用户:<span id="sp1">@Model.LoginState</span>  |@if(Model.LoginState=="未登录"){<a href="@Url.Action("Login","Users")">登陆</a>}
        else{ <a href="@Url.Action("ExitLogin","Users")">退出</a>}|
         <a href="@Url.Action("SignIn","Users")">注册</a>
     </div>
@@ -82,7 +83,10 @@
     <div id="txtsuggest">留下你们的一些建议吧~</div>
     <div id="txt2">发表评论:</div>
     <div id="ContentBody">暂无评论</div>
-    <div id="txtTip">你还未登录,请<a href="#">登录</a>或<a href="#">注册</a></div>
+    @if(Model.LoginState=="未登录")
+    {
+    <div id="txtTip">你还未登录,请<a href="@Url.Action("Login","Users")">登录</a>或<a href="@Url.Action("SignIn","Users")">注册</a></div>
+    }
     <div id="inputComment">
         <textarea id="txtarea"></textarea>
     </div>
