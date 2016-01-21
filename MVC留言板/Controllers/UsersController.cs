@@ -12,6 +12,7 @@ using System.Drawing.Drawing2D;
 using System.IO;
 using System.Drawing.Imaging;
 using MVC留言板.ViewModels;
+using System.Web.Security;
 
 namespace MVC留言板.Controllers
 {
@@ -72,21 +73,43 @@ namespace MVC留言板.Controllers
         public ActionResult Login(UserInfo user)
         {
             //用户名密码model验证
-            if (ModelState.IsValid)
+            try
             {
-                //判断用户名密码是否正确
-                string sql = "select count(1) from Users where UserName=@UserName and UserPwd=@UserPwd";
-                SqlParameter[] param={new SqlParameter("@UserName",user.UserName),
-                                        new SqlParameter("@UserPwd",user.UserPwd )};
-                if(Convert.ToInt32(SqlHelper.ExecuteScalar(sql,CommandType.Text,param))!=1)
+                if (ModelState.IsValid)
                 {
-                    ModelState.AddModelError("loginError", "*用户名或密码错误");
+                    //判断用户名密码是否正确
+                    string sql = "select count(1) from Users where UserName=@UserName and UserPwd=@UserPwd";
+                    SqlParameter[] param ={new SqlParameter("@UserName",user.UserName),
+                                        new SqlParameter("@UserPwd",user.UserPwd )};
+                    if (Convert.ToInt32(SqlHelper.ExecuteScalar(sql, CommandType.Text, param)) != 1)
+                    {
+                        ModelState.AddModelError("loginError", "*用户名或密码错误");
+                    }
+                    //用户名密码正确则保持用户登陆状态
+
+                    Session["Uid"] = user.UserName;
+                    FormsAuthentication.SetAuthCookie(user.UserName, false);
+                    //用户是否选择了一周免登陆
+                    //if (Request.Form["rememberLogin"] != null)
+                    //{
+                    //    string UserStr = user.UserName + "&" + user.UserPwd;
+                    //    HttpCookie cookie = new HttpCookie();
+                    //}
+
+                    if (Session["redirectUrl"] != null)
+                    {
+                        //返回原来页面
+                        return Redirect(Session["redirectUrl"].ToString());
+                    }
+                    else
+                        return RedirectToAction("Index", "Comment");
                 }
-                //用户名密码正确则保持用户登陆状态
-                Session["UserName"] = user.UserName;
-                return RedirectToAction("Index", "Comment");
+                return View();
             }
-            return View();
+            catch
+            {
+                return RedirectToAction("Error");
+            }
         }
         //退出登录
         public ActionResult ExitLogin()

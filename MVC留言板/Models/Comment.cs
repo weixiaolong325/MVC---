@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-
+using System.ComponentModel.DataAnnotations;
 namespace MVC留言板.Models
 {
     public class Comment
@@ -19,7 +19,7 @@ namespace MVC留言板.Models
 
         public int CommentID { get; set; }
 
-        public int UserId { get; set; }
+        public string UserId { get; set; }
 
         public int IsInitial { get; set; }
 

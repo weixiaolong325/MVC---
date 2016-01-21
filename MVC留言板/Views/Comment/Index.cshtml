@@ -67,11 +67,37 @@
         height:100px;
         resize:none;
         min-width:200px;
+        background-color:#fff;
         }
         #btnsub {
         margin-left:20px;
         }
     </style>
+    <script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js "></script>
+    <script type="text/javascript" >
+        
+        $(document).ready(function () {
+            $("#submitComment").click(function () {
+
+                var jsonData = {
+                    @*评论内容*@
+                    comment: $("#txtarea").val(),
+                    @*评论的内容的ID*@
+                    commentID: 0,
+                    @*是父评论*@
+                    isInitial: 1,
+                    @*回复的用户的ID*@
+                    replyUserId: 0,
+                }
+                $.post("@Url.Action("Index","Comment")", jsonData, function (data, status) {
+                    if (data == "请先登陆")
+                        window.location = "@Url.Action("Login","Users")";
+                    else 
+                        alert("评论成功")
+                })
+            })
+        })
+    </script>
 </head>
 <body>
     <div id="head">
@@ -81,8 +107,7 @@
     </div>
    <div id="title">留言板</div> 
     <div id="txtsuggest">留下你们的一些建议吧~</div>
-    <div id="txt2">发表评论:</div>
-    <div id="ContentBody">暂无评论</div>
+    
     @if(Model.LoginState=="未登录")
     {
     <div id="txtTip">你还未登录,请<a href="@Url.Action("Login","Users")">登录</a>或<a href="@Url.Action("SignIn","Users")">注册</a></div>
@@ -90,6 +115,9 @@
     <div id="inputComment">
         <textarea id="txtarea"></textarea>
     </div>
-    <div id="btnsub"><input type="submit" value="提交评论"/></div>
+    <div id="btnsub"><input id="submitComment" type="button" value="提交评论"/></div>
+    @Html.ValidationMessage("msg",new {@class="msgerror"})
+    <div id="txt2">最新评论:</div>
+    <div id="ContentBody">暂无评论</div>
 </body>
 </html>

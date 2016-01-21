@@ -38,7 +38,9 @@
                 @Html.PasswordFor(model => model.UserPwd)
                 @Html.ValidationMessageFor(model => model.UserPwd, "", new { @class = "msgerror" })
             </div>
-    
+             <div class="editor-field">
+               <input type="checkbox" name="rememberLogin"/><span id="txtRememberLogin" style="font-size:8px">一周免登陆</span>
+            </div>
     
             <p>
                 <input type="submit" value="登陆" />
