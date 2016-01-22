@@ -73,6 +73,7 @@
         margin-left:20px;
         }
     </style>
+    <link href="~/Content/Web.css" rel="stylesheet" />
     <script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js "></script>
     <script type="text/javascript" >
         
@@ -89,11 +90,22 @@
                     @*回复的用户的ID*@
                     replyUserId: 0,
                 }
-                $.post("@Url.Action("Index","Comment")", jsonData, function (data, status) {
-                    if (data == "请先登陆")
-                        window.location = "@Url.Action("Login","Users")";
-                    else 
-                        alert("评论成功")
+                $.post("@Url.Action("Addcomment","Comment")", jsonData, function (data, status) {
+                    @*把json字符串转化为json对象*@
+                    var obj = eval('(' + data + ')')
+                    @*未登录就跳转到登录页面*@
+                    if (obj.LoginState == 'no')
+                        window.location = "@Url.Action("Login", "Users", new { redirectUrl = Request.RawUrl })";
+                        //遇到错误消息
+                   else if (obj.msg != null){
+                        $("#msg").text(obj.msg);
+                        $("#msg").attr("class", "msgerror");
+                    }
+                    else {
+                        $("#msg").text("评论成功");
+                        $("#msg").attr("class", "msgsucceed");
+                        }
+                    
                 })
             })
         })
@@ -101,7 +113,7 @@
 </head>
 <body>
     <div id="head">
-     用户:<span id="sp1">@Model.LoginState</span>  |@if(Model.LoginState=="未登录"){<a href="@Url.Action("Login","Users")">登陆</a>}
+     用户:<span id="sp1">@Model.Uid</span>  |@if(Model.LoginState=="no"){<a href="@Url.Action("Login","Users")">登陆</a>}
        else{ <a href="@Url.Action("ExitLogin","Users")">退出</a>}|
         <a href="@Url.Action("SignIn","Users")">注册</a>
     </div>
@@ -115,8 +127,8 @@
     <div id="inputComment">
         <textarea id="txtarea"></textarea>
     </div>
-    <div id="btnsub"><input id="submitComment" type="button" value="提交评论"/></div>
-    @Html.ValidationMessage("msg",new {@class="msgerror"})
+    <div id="btnsub"><input id="submitComment" type="button" value="提交评论"/>&nbsp;<span class="msgerror" id="msg"></span></div>
+    
     <div id="txt2">最新评论:</div>
     <div id="ContentBody">暂无评论</div>
 </body>

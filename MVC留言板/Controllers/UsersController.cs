@@ -67,6 +67,21 @@ namespace MVC留言板.Controllers
         //登录
         public ActionResult Login()
         {
+            //先判断cookie中是否存有用户登录信息
+            HttpCookie cookie = Request.Cookies.Get("Uid");
+            if (cookie != null)
+            {
+                Session["Uid"] = cookie.Value;
+                string rawUrl = Request.QueryString["redirectUrl"];
+                if (rawUrl != null)
+                {
+                    //返回原来页面
+                    return Redirect(rawUrl);
+                }
+                else
+                    return RedirectToAction("Index", "Comment");
+            }
+            else 
             return View();
         }
         [HttpPost]
@@ -90,16 +105,18 @@ namespace MVC留言板.Controllers
                     Session["Uid"] = user.UserName;
                     FormsAuthentication.SetAuthCookie(user.UserName, false);
                     //用户是否选择了一周免登陆
-                    //if (Request.Form["rememberLogin"] != null)
-                    //{
-                    //    string UserStr = user.UserName + "&" + user.UserPwd;
-                    //    HttpCookie cookie = new HttpCookie();
-                    //}
-
-                    if (Session["redirectUrl"] != null)
+                    if (Request.Form["rememberLogin"] != null)
+                    {
+                        HttpCookie cookie = new HttpCookie("Uid");
+                        cookie.Expires = DateTime.Now.AddDays(7);
+                        cookie.Value= user.UserName;
+                        Response.Cookies.Add(cookie);
+                    }
+                    string rawUrl = Request.QueryString["redirectUrl"];
+                    if (rawUrl != null)
                     {
                         //返回原来页面
-                        return Redirect(Session["redirectUrl"].ToString());
+                        return Redirect(rawUrl);
                     }
                     else
                         return RedirectToAction("Index", "Comment");
@@ -114,7 +131,10 @@ namespace MVC留言板.Controllers
         //退出登录
         public ActionResult ExitLogin()
         {
-            Session.Remove("UserName");
+            Session.Remove("Uid");
+            HttpCookie cookie = Request.Cookies.Get("Uid");
+            cookie.Expires = DateTime.Now.AddDays(-1);
+            Response.Cookies.Add(cookie);
             return RedirectToAction("Index", "Comment");
         }
         //错误页

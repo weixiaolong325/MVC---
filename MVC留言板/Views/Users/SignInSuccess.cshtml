@@ -30,11 +30,11 @@
         {
             document.getElementById("s").innerHTML = s;
             s--;
-            if (s >=0) {
+            if (s >= 0) {
                 setTimeout('Redirect()', 1000);
             }
             else
-                window.location.href="@Url.Action("Login","Users")"
+                window.location.href = "@Url.Action("Login","Users")";
         }
      
     </script>

@@ -2,5 +2,9 @@
 }
  .msgerror {
         color:#f00;
-        font-size:2px;
+        font-size:8px;
         }
+.msgsucceed {
+color:#13c843;
+font-size:8px;
+}

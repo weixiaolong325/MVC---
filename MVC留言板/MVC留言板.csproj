@@ -44,6 +44,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -118,7 +119,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="jsonHelper.cs" />
     <Compile Include="Models\Comment.cs" />
+    <Compile Include="Models\CommentLayer.cs" />
     <Compile Include="SQLHelper.cs" />
     <Compile Include="UserPwdVerify.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />

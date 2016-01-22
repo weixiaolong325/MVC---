@@ -14,7 +14,8 @@ namespace MVC留言板.Models
         public DateTime UpTime { get; set; }
 
         public int IsDel { get; set; }
-
+        [Required(ErrorMessage="*内容不能为空")]
+        [StringLength (200,ErrorMessage="内容长度不能超过200个")]
         public string CommentContent { get; set; }
 
         public int CommentID { get; set; }
