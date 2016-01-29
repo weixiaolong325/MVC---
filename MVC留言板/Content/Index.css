@@ -1,0 +1,97 @@
+﻿body {
+}
+ * {
+        padding:0px;
+        margin:0px;
+        font-size:14px;
+        background-color:#fefbee;
+        }
+        #head {
+        height:30px;
+        line-height:30px;
+        border-bottom:1px dashed #ddb7b7;
+        text-align:right;
+        padding-right:20px;
+        }
+        #sp1 {
+        color:#00ff21;
+        }
+        #title {
+        font-size:24px;
+        color:#0a6b2f;
+        margin:5px;
+        height:50px;
+        line-height:50px;
+        text-align:center;
+        border-bottom:1px solid #fbf8e9;
+        }
+        #txtsuggest {
+        color:#4c685b;
+        font-weight:700;
+        font-size:18px;
+        margin:20px 40px;
+        }
+        #txt2{
+           margin-left:20px;
+           font-size:14px;
+           font-weight:700;
+           font-family:"方正舒体";
+        }
+        #ContentBody {
+        /*border:1px solid #8b8888;*/
+        width:80%;
+        margin-left:20px;
+        min-height:30px;
+        margin-top:10px;
+        margin-bottom:40px;
+        background-color:#fce8e8;
+        padding:10px;
+        }
+        #inputComment {
+        margin-left:20px;
+        margin-top:5px;
+        margin-bottom:5px;
+        }
+        #txtTip {
+        margin-left:20px;
+        }
+        #txtarea {
+        width:50%;
+        height:100px;
+        resize:none;
+        min-width:200px;
+        background-color:#fff;
+        }
+        #btnsub {
+        margin-left:20px;
+        }
+        .contentSpan {
+        padding:3px;
+        border:1px solid #ddb7b7;
+        margin:5px;
+        }
+        .contentParent {
+        margin-left:5px;
+        }
+        .contentInfo1,.contentInfo2,.contentInfo3 {
+        margin:5px 0px;
+        }
+        .contentchild {
+        margin-left:25px;
+        margin-right:20px;
+        border-top:1px dashed #ddb7b7;
+        }
+        .blank {
+        width:10px;
+        display:inline-block;
+        display:-moz-inline-box;
+        }
+        #txtReplyContent {
+        width:50%;
+        min-width:200px;
+        height:50px;
+        resize:none;
+        }
+.btnDefult {
+cursor:pointer;
+}

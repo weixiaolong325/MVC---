@@ -93,15 +93,14 @@ namespace MVC留言板.Controllers
                 if (ModelState.IsValid)
                 {
                     //判断用户名密码是否正确
-                    string sql = "select count(1) from Users where UserName=@UserName and UserPwd=@UserPwd";
+                    string sql = "select count(1) from Users where UserName=@UserName  COLLATE Chinese_PRC_CS_AI_WS and UserPwd=@UserPwd ";
                     SqlParameter[] param ={new SqlParameter("@UserName",user.UserName),
                                         new SqlParameter("@UserPwd",user.UserPwd )};
-                    if (Convert.ToInt32(SqlHelper.ExecuteScalar(sql, CommandType.Text, param)) != 1)
+                    if (Convert.ToInt32(SqlHelper.ExecuteScalar(sql, CommandType.Text,param)) != 1)
                     {
                         ModelState.AddModelError("loginError", "*用户名或密码错误");
                     }
                     //用户名密码正确则保持用户登陆状态
-
                     Session["Uid"] = user.UserName;
                     FormsAuthentication.SetAuthCookie(user.UserName, false);
                     //用户是否选择了一周免登陆
